@@ -1,0 +1,15 @@
+{
+    "name": "mustafa/php-webserver",
+    "autoload": {
+        "psr-4": {
+            "Mustafa\\PhpWebserver\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mostafaamahmoudd",
+            "email": "mostafaa.mahmoudd550@gmail.com"
+        }
+    ],
+    "require": {}
+}
