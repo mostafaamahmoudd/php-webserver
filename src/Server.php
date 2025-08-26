@@ -2,7 +2,7 @@
 namespace Mustafa\PhpWebserver;
 
 use Mustafa\PhpWebserver\Request;
-use Mustafa\PhpWebserver\Response;
+use Mustafa\PhpWebserver\Exception;
 
 class Server
 {
