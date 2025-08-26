@@ -87,9 +87,9 @@ class Response
 
         $this->body = $body;
 
-        $this->headers('Date', gmdate('D, d M Y H:i:s T'));
-        $this->headers('Content-Type', 'text/html; charset=utf-8');
-        $this->headers('Server', 'PHP-Server/1.0.0 (Disney Version)');
+        $this->setHeaders('Date', gmdate('D, d M Y H:i:s T'));
+        $this->setHeaders('Content-Type', 'text/html; charset=utf-8');
+        $this->setHeaders('Server', 'PHP-Server/1.0.0 (Disney Version)');
     }
 
     /**

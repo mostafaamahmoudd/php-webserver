@@ -35,7 +35,16 @@ class Server
 
     protected function createSocket()
     {
-        $this->socket = socket_create( AF_INET, SOCK_STREAM, 0 );
+        $this->socket = socket_create(AF_INET, SOCK_STREAM, 0);
+
+        if ($this->socket === false) {
+            throw new Exception(
+                "Could not create socket: " .
+                socket_strerror(socket_last_error())
+            );
+        }
+
+        socket_set_option($this->socket, SOL_SOCKET, SO_REUSEADDR, 1);
     }
 
     protected function bind()
@@ -62,25 +71,38 @@ class Server
             throw new Exception('Callback must be callable');
         }
 
-        while (true) {
-            socket_listen($this->socket);
+        if (!socket_listen($this->socket, 5)) {
+            throw new Exception(
+                "Could not listen on socket: " .
+                socket_strerror(socket_last_error($this->socket))
+            );
+        }
 
-            if (!$client = socket_accept($this->socket)) {
+        while (true) {
+            $client = socket_accept($this->socket);
+            if ($client === false) {
+                continue;
+            }
+
+            $request = socket_read($client, 2048);
+            if ($request === false) {
                 socket_close($client);
                 continue;
             }
 
-            $request = Request::withHeaderString(socket_read($client, 1024));
+            try {
+                $request = Request::withHeaderString($request);
+                $response = call_user_func($callback, $request);
 
-            $response = call_user_func($callback, $request);
+                if (!$response || !$response instanceof Response) {
+                    $response = Response::error(404);
+                }
 
-            if (!$response || !$response instanceof Response) {
-                $response = Response::error(404);
+                socket_write($client, (string) $response, strlen((string) $response));
+            } catch (\Exception $e) {
+                $errorResponse = Response::error(500);
+                socket_write($client, (string) $errorResponse, strlen((string) $errorResponse));
             }
-
-            $response = (string)$response;
-
-            socket_write($client, $response, strlen($response));
 
             socket_close($client);
         }
