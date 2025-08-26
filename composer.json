@@ -11,5 +11,7 @@
             "email": "mostafaa.mahmoudd550@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "ext-sockets": "*"
+    }
 }
