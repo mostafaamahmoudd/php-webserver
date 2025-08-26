@@ -2,8 +2,8 @@
 
 <?php
 
-use PHPWebserver\Server;
-use PHPWebserver\Request;
+use Mustafa\PhpWebserver\Request;
+use Mustafa\PhpWebserver\Server;
 use PHPWebserver\Response;
 
 array_shift($argv);
