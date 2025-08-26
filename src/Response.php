@@ -79,7 +79,7 @@ class Response
      * @param int $status
      * @param string $body
      */
-    public function __construct($status = null, $body)
+    public function __construct($body, $status = null)
     {
         if (!is_null($status)) {
             $this->status = $status;
@@ -128,7 +128,7 @@ class Response
      * @param $status
      * @return $this
      */
-    public function error($status)
+    public static function error($status)
     {
         return new static('<h1>PHP-Server ' . static::$statusCodes[$status] . ' </h1>', $status);
     }

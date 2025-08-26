@@ -35,13 +35,13 @@ class Server
 
     protected function createSocket()
     {
-        $this->socket = socket_create(AF_INET, SOCK_STREAM, 0);
+        $this->socket = socket_create( AF_INET, SOCK_STREAM, 0 );
     }
 
     protected function bind()
     {
         if (!socket_bind($this->socket, $this->host, $this->port)) {
-            throw new \Exception('could not bind: '
+            throw new Exception('Could not bind: '
                 . $this->host . ':'
                 . $this->port . ' - '
                 . socket_strerror(socket_last_error())
@@ -59,10 +59,10 @@ class Server
     public function listen($callback)
     {
         if (!is_callable($callback)) {
-            throw new \Exception('Callback must be callable');
+            throw new Exception('Callback must be callable');
         }
 
-        while (1) {
+        while (true) {
             socket_listen($this->socket);
 
             if (!$client = socket_accept($this->socket)) {
