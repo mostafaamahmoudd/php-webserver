@@ -1,7 +1,8 @@
 <?php
 namespace Mustafa\PhpWebserver;
 
-use PHPWebserver\Response;
+use Mustafa\PhpWebserver\Request;
+use Mustafa\PhpWebserver\Response;
 
 class Server
 {
