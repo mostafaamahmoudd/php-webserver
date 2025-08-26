@@ -1,7 +1,7 @@
 <?php
 namespace Mustafa\PhpWebserver;
 
-class Exception
+class Exception extends \Exception
 {
-
+    //
 }
